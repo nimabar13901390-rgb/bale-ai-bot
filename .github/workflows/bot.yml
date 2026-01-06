@@ -1,0 +1,22 @@
+name: ربات بله
+
+on:
+  schedule:
+    - cron: '0 8,12,16,20,22 * * *'
+  workflow_dispatch:
+
+jobs:
+  send-post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ارسال پیام
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        run: |
+          curl -X POST "https://tapi.bale.ai/bot$BOT_TOKEN/sendMessage" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "chat_id": "@hoshmasnoye",
+            "text": "🎯 تست ربات\n\n✅ کار می‌کنه!\n\n⏰ '$(date +"%H:%M")'",
+            "parse_mode": "HTML"
+          }'
